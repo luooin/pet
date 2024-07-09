@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.FosterMapper">
+
+    <sql id="Base_Column_List">
+        id,user_id,name,time,days,status,room_id
+    </sql>
+
+    <select id="selectAll" resultType="com.example.entity.Foster">
+        select foster.*, user.name as userName, room.name as roomName
+        from foster
+        left join user on foster.user_id = user.id
+        left join room on foster.room_id = room.id
+        <where>
+            <if test="id != null"> and id= #{id}</if>
+            <if test="status != null"> and foster.status = #{status}</if>
+            <if test="userId != null"> and foster.user_id = #{userId}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectById" resultType="com.example.entity.Foster">
+        select
+        <include refid="Base_Column_List" />
+        from foster
+        where id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from foster
+        where  id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.Foster" useGeneratedKeys="true">
+        insert into foster
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="name != null">name,</if>
+                <if test="time != null">time,</if>
+                <if test="days != null">days,</if>
+                <if test="status != null">status,</if>
+                <if test="roomId != null">room_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="userId != null">#{userId},</if>
+                <if test="name != null">#{name},</if>
+                <if test="time != null">#{time},</if>
+                <if test="days != null">#{days},</if>
+                <if test="status != null">#{status},</if>
+                <if test="roomId != null">#{roomId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Foster">
+        update foster
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="days != null">
+                days = #{days},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="roomId != null">
+                room_id = #{roomId},
+            </if>
+        </set>
+        where id = #{id} 
+    </update>
+
+</mapper>

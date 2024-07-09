@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.OrdersMapper">
+
+    <sql id="Base_Column_List">
+        id,user_id,goods_id,order_id,time,username,phone,address,num,status,price
+    </sql>
+
+    <select id="selectAll" resultType="com.example.entity.Orders">
+        select orders.*, goods.name as goodsName, goods.img as goodsImg, user.name as buyName
+        from orders
+        left join goods on orders.goods_id = goods.id
+        left join user on orders.user_id = user.id
+        <where>
+            <if test="id != null"> and id= #{id}</if>
+            <if test="orderId != null"> and order_id = #{orderId}</if>
+            <if test="userId != null"> and user_id= #{userId}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectById" resultType="com.example.entity.Orders">
+        select
+        <include refid="Base_Column_List" />
+        from orders
+        where id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from orders
+        where  id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.Orders" useGeneratedKeys="true">
+        insert into orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="goodsId != null">goods_id,</if>
+                <if test="orderId != null">order_id,</if>
+                <if test="time != null">time,</if>
+                <if test="username != null">username,</if>
+                <if test="phone != null">phone,</if>
+                <if test="address != null">address,</if>
+                <if test="num != null">num,</if>
+                <if test="status != null">status,</if>
+                <if test="price != null">price,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="userId != null">#{userId},</if>
+                <if test="goodsId != null">#{goodsId},</if>
+                <if test="orderId != null">#{orderId},</if>
+                <if test="time != null">#{time},</if>
+                <if test="username != null">#{username},</if>
+                <if test="phone != null">#{phone},</if>
+                <if test="address != null">#{address},</if>
+                <if test="num != null">#{num},</if>
+                <if test="status != null">#{status},</if>
+                <if test="price != null">#{price},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Orders">
+        update orders
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="num != null">
+                num = #{num},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+        </set>
+        where id = #{id} 
+    </update>
+
+</mapper>

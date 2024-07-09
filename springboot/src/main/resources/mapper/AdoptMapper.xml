@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.AdoptMapper">
+
+    <sql id="Base_Column_List">
+        id,user_id,animal_id,time,status
+    </sql>
+
+    <select id="selectAll" resultType="com.example.entity.Adopt">
+        select adopt.*, user.name as userName, animal.img as animalImg, animal.name as animalName
+        from adopt
+        left join user on adopt.user_id = user.id
+        left join animal on adopt.animal_id = animal.id
+        <where>
+            <if test="id != null"> and id= #{id}</if>
+            <if test="animalId != null"> and animal_id = #{animalId}</if>
+            <if test="userId != null"> and user_id = #{userId}</if>
+            <if test="status != null"> and adopt.status = #{status}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectById" resultType="com.example.entity.Adopt">
+        select
+        <include refid="Base_Column_List" />
+        from adopt
+        where id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from adopt
+        where  id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.Adopt" useGeneratedKeys="true">
+        insert into adopt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="animalId != null">animal_id,</if>
+                <if test="time != null">time,</if>
+                <if test="status != null">status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="userId != null">#{userId},</if>
+                <if test="animalId != null">#{animalId},</if>
+                <if test="time != null">#{time},</if>
+                <if test="status != null">#{status},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Adopt">
+        update adopt
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="animalId != null">
+                animal_id = #{animalId},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id} 
+    </update>
+
+</mapper>

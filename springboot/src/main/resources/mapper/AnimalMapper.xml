@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.AnimalMapper">
+
+    <sql id="Base_Column_List">
+        id,img,name,sex,age,type,status,descr
+    </sql>
+
+    <select id="selectAll" resultType="com.example.entity.Animal">
+        select
+        <include refid="Base_Column_List" />
+        from animal
+        <where>
+            <if test="id != null"> and id= #{id}</if>
+            <if test="name != null"> and name like concat('%', #{name}, '%')</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectById" resultType="com.example.entity.Animal">
+        select
+        <include refid="Base_Column_List" />
+        from animal
+        where id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from animal
+        where  id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.example.entity.Animal" useGeneratedKeys="true">
+        insert into animal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="img != null">img,</if>
+                <if test="name != null">name,</if>
+                <if test="sex != null">sex,</if>
+                <if test="age != null">age,</if>
+                <if test="type != null">type,</if>
+                <if test="status != null">status,</if>
+                <if test="descr != null">descr,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id},</if>
+                <if test="img != null">#{img},</if>
+                <if test="name != null">#{name},</if>
+                <if test="sex != null">#{sex},</if>
+                <if test="age != null">#{age},</if>
+                <if test="type != null">#{type},</if>
+                <if test="status != null">#{status},</if>
+                <if test="descr != null">#{descr},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Animal">
+        update animal
+        <set>
+            <if test="img != null">
+                img = #{img},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="descr != null">
+                descr = #{descr},
+            </if>
+        </set>
+        where id = #{id} 
+    </update>
+
+</mapper>
