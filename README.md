@@ -35,11 +35,13 @@
 #### 项目演示🌞
 
 **管理端**
-![GIF 2024-7-9 10-01-31](https://github.com/luooin/pet/assets/85004172/3aa0e197-c186-48a7-a13b-23386437fec8)
+![GIF 2024-7-9 10-52-14](https://github.com/luooin/pet/assets/85004172/af8d7294-c574-497b-bc7c-daaf942d1b05)
+
 
 **用户端**
 
-![GIF 2024-7-9 10-02-54](https://github.com/luooin/pet/assets/85004172/f6450409-bc38-4af2-8d7d-20614ee2a355)
+![GIF 2024-7-9 10-54-44](https://github.com/luooin/pet/assets/85004172/7ca193d1-3262-4542-9902-e01aacbdd1bd)
+
 
 
 #### 参与贡献🌞
