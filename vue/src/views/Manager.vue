@@ -4,7 +4,7 @@
     <div class="manager-header">
       <div class="manager-header-left">
         <img src="@/assets/imgs/logo.png" style="border-radius: 50%"/>
-        <div class="title">宠物管理平台</div>
+        <div class="title">宠物领养平台</div>
       </div>
 
       <div class="manager-header-center">
